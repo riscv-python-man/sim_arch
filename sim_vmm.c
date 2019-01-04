@@ -78,7 +78,6 @@ unsigned long vmm_fifo_out(struct hw_fifo * fifo )
 	 if(fifo->eo_reg  ==  fifo->ei_reg)
 	 {
 		 //printf("%s(%d):fifo  empty... \n", __func__, __LINE__);
-		ret = 1;
 	 }
 	 else
 	 {
@@ -116,9 +115,12 @@ unsigned long vmm_mk_pkt( unsigned char* buf, int buf_len)
 	{
 		pthread_mutex_unlock(&fifo->mutex);
 		//printf("%s(%d):no enough cell..vld %d,need %d\n", __func__, __LINE__, fifo->evld_reg, need_cell);
+		//usleep(10);
 		return 1;
 	}
 	pthread_mutex_unlock(&fifo->mutex);
+	
+//	printf("valid num %d \n", fifo->evld_reg);
 
 	cpy_len = remain_len < hw_cell_sz? remain_len:hw_cell_sz;
 	while (remain_len > 0) 
@@ -131,10 +133,13 @@ unsigned long vmm_mk_pkt( unsigned char* buf, int buf_len)
 		}	
 		cpy_len = remain_len < hw_cell_sz? remain_len:hw_cell_sz;
 		
+//		printf("cid 0x%lx\n",cid[i]);
+
 		memcpy((unsigned char*)cid[i], buf_cursor, cpy_len);
 		remain_len -=  hw_cell_sz;
 		buf_cursor += cpy_len;
 //		printf("cursor %p, remain_len %d, cpy_len %d\n", buf_cursor, remain_len, cpy_len);
+
 		i++;
 	}
 

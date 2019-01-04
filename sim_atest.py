@@ -247,7 +247,7 @@ class B2B_function_test(object):
             t.setDaemon(True)
             t.start()
     def start_test(self):
-        print("-*-*-*-*-*-*-Wifi Verify start-*-*-*-*-*-*-*-*\n")
+        print("-*-*-*-*-*-*-Wifi B2B Verify start-*-*-*-*-*-*-*-*\n")
         self.test_case = ["vht20M"]
         self.print_sta_ap_thread()
         for case in self.test_case:
