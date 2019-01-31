@@ -5,10 +5,10 @@ src  = $(shell find ./ -name "*.c")
 obj  = $(src:%.c=%.o)# it's a replace... 
 
 $(tag):$(obj)
-	$(cc) -o $(tag) $(obj) -lpthread
+	$(cc) -o $(tag) $(obj) -lpthread -g
 
 %.o:%.c $(deps)
-	$(cc) -c $< -o $@  -lpthread
+	$(cc) -c $< -o $@  -lpthread -g
 
 .PHONY: co
 co:
