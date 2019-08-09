@@ -6,11 +6,11 @@ import matplotlib as mpl
 
 
 
-file_path = "d:\\zqh\\0809-4.txt"
+file_path = "./0809-4.txt"
 print("start.....")
 log = open(file_path,"r")
 #
-result_file = open("d:\\zqh\\5-m-m-result","w")
+result_file = open("./5-m-m-result","w")
 pick_lines = []
 smp_rst = []
 predict = []
@@ -45,7 +45,7 @@ plt.plot(delt,color='red',marker='.',label ='true')
 plt.show()
 
 log.close()
-result_file.close()
+#result_file.close()
 
             
 print("end .....")
