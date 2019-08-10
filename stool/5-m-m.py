@@ -30,7 +30,7 @@ plt.ylim(-35,17)
 #plt.subplots_adjust(bottom = 0.1)
 
 ax.xaxis.set_major_locator( MultipleLocator(10))
-ax.xaxis.set_minor_locator( MultipleLocator(2) )
+ax.xaxis.set_minor_locator( MultipleLocator(1) )
 
 ax.yaxis.set_major_locator( MultipleLocator(5))
 ax.yaxis.set_minor_locator( MultipleLocator(1) )
@@ -65,6 +65,8 @@ for i in range(len(smp_rst)):
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
 #long one and long zero analyze
+total_long_1 = 0
+total_long_0 = 0
 cnt_idx = 0
 for k in range(0,len(smp_rst),1):
     if smp_rst[k] == 1:
@@ -73,30 +75,34 @@ for k in range(0,len(smp_rst),1):
 #do zero
         if(long_zero_cnt > 1):
             long_zero.append(long_zero_cnt)
+            total_long_0 += 1
         else:
             long_zero.append(0)
         long_zero_cnt = 0
+    
     else:
         if(long_one_cnt > 1):
             long_one.append(long_one_cnt)
+            total_long_1 += 1
         else:
             long_one.append(0)
-        long_one_cnt = 0
+        long_one_cnt = 0    
 #do zero
         long_zero_cnt = long_zero_cnt + 1
         long_zero.append(0)
     
 
 #print(long_one)       
-#print (smp_rst)        
-plt.plot(smp_rst_show,color='green',marker='.',label ='true')
-plt.plot(delt,color='red',marker='.',label ='true')
-plt.plot(long_one,color='darkblue',marker='.',label ='true')
-plt.plot(long_zero,color='brown',marker='.',label ='true')
+#print (smp_rst)
+print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
+plt.plot(smp_rst_show,color='green',marker='.',label ='sample')
+plt.plot(delt,color='red',marker='.',label ='delt(1-0)')
+plt.plot(long_one,color='darkblue',marker='.',label ='long 1 %d' % total_long_1)
+plt.plot(long_zero,color='brown',marker='.',label ='long 0 %d' % total_long_0)
 
+plt.legend()
 plt.show()
+
 log.close()
-
-
-            
+ 
 print("end .....")
