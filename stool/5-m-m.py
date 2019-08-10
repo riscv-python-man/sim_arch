@@ -6,10 +6,9 @@ import matplotlib as mpl
 from pylab import *
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 
-file_path = "./0810-4.txt"
+file_path = "./0811-4.txt"
 print("start.....")
-log = open(file_path,"r")
-#
+
 pick_lines = []
 smp_rst = []
 smp_rst_show = []
@@ -20,6 +19,9 @@ long_one =[]
 long_one_cnt =0
 long_zero = []
 long_zero_cnt = 0
+total_long_1 = 0
+total_long_0 = 0
+cnt_idx = 0
 
 plt.figure(num=1,figsize=(12, 4))
 ymajorLocator  = MultipleLocator(2)
@@ -27,14 +29,13 @@ ax = plt.gca()
 plt.grid()
 plt.xlim(-4,288)
 plt.ylim(-35,17)
-#plt.subplots_adjust(bottom = 0.1)
 
-ax.xaxis.set_major_locator( MultipleLocator(10))
-ax.xaxis.set_minor_locator( MultipleLocator(1) )
+ax.xaxis.set_major_locator(MultipleLocator(10))
+ax.xaxis.set_minor_locator(MultipleLocator(1) )
+ax.yaxis.set_major_locator(MultipleLocator(5))
+ax.yaxis.set_minor_locator(MultipleLocator(1) )
 
-ax.yaxis.set_major_locator( MultipleLocator(5))
-ax.yaxis.set_minor_locator( MultipleLocator(1) )
-
+log = open(file_path,"r")
 line_list = log.readlines()
 
 #get all lines
@@ -65,9 +66,6 @@ for i in range(len(smp_rst)):
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
 #long one and long zero analyze
-total_long_1 = 0
-total_long_0 = 0
-cnt_idx = 0
 for k in range(0,len(smp_rst),1):
     if smp_rst[k] == 1:
         long_one_cnt = long_one_cnt +1
@@ -91,10 +89,9 @@ for k in range(0,len(smp_rst),1):
         long_zero_cnt = long_zero_cnt + 1
         long_zero.append(0)
     
-
 #print(long_one)       
 #print (smp_rst)
-print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
+#print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
 plt.plot(smp_rst_show,color='green',marker='.',label ='sample')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0)')
 plt.plot(long_one,color='darkblue',marker='.',label ='long 1 %d' % total_long_1)
