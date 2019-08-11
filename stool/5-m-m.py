@@ -62,7 +62,7 @@ for i in range(len(smp_rst)):
         one = one +1
     if(smp_rst[i] == 0):
         zero = zero + 1
-    delt.append((one-zero))
+    delt.append((one-zero) - 5)
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
 #long one and long zero analyze
@@ -93,9 +93,9 @@ for k in range(0,len(smp_rst),1):
 #print (smp_rst)
 #print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
 plt.plot(smp_rst_show,color='green',marker='.',label ='sample')
-plt.plot(delt,color='red',marker='.',label ='delt(1-0)')
-plt.plot(long_one,color='darkblue',marker='.',label ='long 1 %d' % total_long_1)
-plt.plot(long_zero,color='brown',marker='.',label ='long 0 %d' % total_long_0)
+plt.plot(delt,color='red',marker='.',label ='delt(1-0): %d'%(one-zero))
+plt.plot(long_one,color='darkblue',marker='.',label ='long1=%d  [1]=%d' % (total_long_1,one))
+plt.plot(long_zero,color='brown',marker='.',label ='long0=%d  [0]=%d' % (total_long_0,zero))
 
 plt.legend()
 plt.show()
