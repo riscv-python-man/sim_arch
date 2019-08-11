@@ -9,6 +9,8 @@ import random
 file_path = "./0811-4.txt"
 print("start.....")
 
+normal_run = 0
+
 pick_lines = []
 smp_rst = []
 smp_rst_show = []
@@ -67,25 +69,26 @@ for idx in range(len(line_list)):
     line = line_list[idx]
     pick_lines.append(line)
 
+if normal_run == 1:
 #get sample
-for j in range(len(pick_lines)):
-    x = pick_lines[j]
-    for k in range(len(x)):
-        if x[k].isdigit():
-            smp_rst.append(int(x[k]))
-            smp_rst_show.append(int(x[k]) + 13)
+    for j in range(len(pick_lines)):
+        x = pick_lines[j]
+        for k in range(len(x)):
+            if x[k].isdigit():
+                smp_rst.append(int(x[k]))
+                smp_rst_show.append(int(x[k]) - 30)
 
 #training  sequnce
-'''
-for x in range(0,288,1):
-    smp_rst.append(random.randint(0,1))
-    smp_rst_show.append(smp_rst[x] + 13) 
-'''            
+else:
+    for x in range(0,288,1):
+        smp_rst.append(random.randint(0,1))
+        smp_rst_show.append(smp_rst[x] -30) 
+            
 
 #expand for better show
 for j in range(len(smp_rst_show)):
-    if smp_rst_show[j] == 13:
-        smp_rst_show[j] = smp_rst_show[j] - 1
+    if smp_rst_show[j] == -30:
+        smp_rst_show[j] = smp_rst_show[j] - 4
 
 #1-0 delt analyze
 for i in range(len(smp_rst)):
@@ -164,7 +167,7 @@ for k in range(0,len(smp_rst),1):
 #print(long_one)       
 #print (smp_rst)
 #print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
-
+'''
 long_x0 = [long_2_0,0,0,0,0,0,0,0,0,0,0,0,0,long_3_0,0,0,0,0,0,0,0,0,0,0,0,0,long_4_0,0,0,0,0,0,0,0,0,0,0,0,0,long_5_0,0,0,0,0,0,0,0,0,0,0,0,0,
            long_6_0,0,0,0,0,0,0,0,0,0,0,0,0,long_7_0,0,0,0,0,0,0,0,0,0,0,0,0,long_8_0,0,0,0,0,0,0,0,0,0,0,0,0,long_9_0,0,0,0,0,0,0,0,0,0,0,0,0,
            long_10_0,0,0,0,0,0,0,0,0,0,0,0,0,long_11_0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -174,20 +177,27 @@ long_x1 = [long_2_1,0,0,0,0,0,0,0,0,0,0,0,0,long_3_1,0,0,0,0,0,0,0,0,0,0,0,0,lon
 
 for i in range(len(long_x0)):
     long_x0[i] -= 40
-    long_x1[i] -= 20
-    
-#print(long_x0)
-#print(long_x1)
+    long_x1[i] -= 20           
+'''
+longx_idx = [2,3,4,5,6,7,8,9,10,11]
+long_x0 = [long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
+long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
-plt.plot(smp_rst_show,color='green',marker='.',label ='sample')
-plt.plot(delt,color='red',marker='.',label ='delt(1-0): %d'%(one-zero))
-plt.plot(long_one,color='darkblue',marker='.',label ='long1=%d  [1]=%d' % (total_long_1,one))
-plt.plot(long_zero,color='brown',marker='.',label ='long0=%d  [0]=%d' % (total_long_0,zero))
+print("cnt",longx_idx)
+print("_x0",long_x0)
+print("_x1",long_x1)
 
-plt.plot(long_x0,color='black',marker='.',linestyle=':',label ='long0 distr')
-plt.plot(long_x1,color='cyan',marker='.',label ='long1 distr')
+plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
+plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
-plt.legend()
+plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (total_long_0,zero))
+plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (total_long_1,one))
+
+
+#plt.plot(long_x0,color='black',marker='.',linestyle=':',label ='L0 dist')
+#plt.plot(long_x1,color='cyan',marker='.',label ='L1 dist')
+
+plt.legend(loc='best', fontsize=8)
 plt.show()
 
 log.close()
