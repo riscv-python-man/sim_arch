@@ -6,7 +6,7 @@ from pylab import *
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 import random
 
-file_path = "./0811-4.txt"
+file_path = "./0812-4.txt"
 print("start.....")
 
 normal_run = 0
@@ -23,6 +23,9 @@ long_zero = []
 long_zero_cnt = 0
 total_long_1 = 0
 total_long_0 = 0
+single_1 = 0
+single_0 =0
+
 cnt_idx = 0
 
 long_2_1 =0
@@ -54,7 +57,7 @@ ymajorLocator  = MultipleLocator(2)
 ax = plt.gca()
 plt.grid()
 plt.xlim(-4,294)
-plt.ylim(-50,20)
+plt.ylim(-40,20)
 
 ax.xaxis.set_major_locator(MultipleLocator(10))
 ax.xaxis.set_minor_locator(MultipleLocator(1) )
@@ -80,7 +83,7 @@ if normal_run == 1:
 
 #training  sequnce
 else:
-    for x in range(0,288,1):
+    for x in range(0,28,1):
         smp_rst.append(random.randint(0,1))
         smp_rst_show.append(smp_rst[x] -30) 
             
@@ -131,6 +134,9 @@ for k in range(0,len(smp_rst),1):
             long_10_0 +=1
         if long_zero_cnt == 11:
             long_11_0 +=1
+
+        if long_zero_cnt == 1:
+            single_0 +=1
         long_zero_cnt = 0
     
     else:
@@ -159,6 +165,9 @@ for k in range(0,len(smp_rst),1):
             long_10_1 +=1
         if long_one_cnt == 11:
             long_11_1 +=1
+
+        if long_one_cnt == 1:
+            single_1 += 1
         long_one_cnt = 0    
 #do zero
         long_zero_cnt = long_zero_cnt + 1
@@ -183,10 +192,10 @@ longx_idx = [2,3,4,5,6,7,8,9,10,11]
 long_x0 = [long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
 long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
-print("cnt",longx_idx)
-print("_x0",long_x0)
-print("_x1",long_x1)
-
+print("cnt  ",longx_idx)
+print("_x0  ",long_x0)
+print("_x1  ",long_x1)
+print("seq:  L0=%d L1=%d S0=%d S1=%d" %(total_long_0,total_long_1, single_0, single_1))
 plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
