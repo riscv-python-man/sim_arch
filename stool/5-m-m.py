@@ -9,7 +9,7 @@ import random
 file_path = "./0812-4.txt"
 print("start.....")
 
-normal_run = 0
+normal_run = 1
 
 pick_lines = []
 smp_rst = []
@@ -25,6 +25,8 @@ total_long_1 = 0
 total_long_0 = 0
 single_1 = 0
 single_0 =0
+jump_10_cnt = 0
+jump_01_cnt = 0
 
 cnt_idx = 0
 
@@ -83,7 +85,7 @@ if normal_run == 1:
 
 #training  sequnce
 else:
-    for x in range(0,28,1):
+    for x in range(0,28800,1):
         smp_rst.append(random.randint(0,1))
         smp_rst_show.append(smp_rst[x] -30) 
             
@@ -102,9 +104,16 @@ for i in range(len(smp_rst)):
     delt.append((one-zero) - 5)
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
+last_0 = 0
+last_1 = 0
 #long one and long zero analyze
 for k in range(0,len(smp_rst),1):
     if smp_rst[k] == 1:
+        if last_0 == 0:
+            jump_01_cnt +=1
+            last_0 = 1
+
+        last_1 = 1
         long_one_cnt = long_one_cnt +1
         long_one.append(0)
 #do zero
@@ -140,6 +149,11 @@ for k in range(0,len(smp_rst),1):
         long_zero_cnt = 0
     
     else:
+        if last_1 == 1:
+            jump_10_cnt += 1
+            last_1 = 0
+            
+        last_0 = 0
         if(long_one_cnt > 1):
             long_one.append(long_one_cnt)
             total_long_1 += 1
@@ -195,7 +209,7 @@ long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9
 print("cnt  ",longx_idx)
 print("_x0  ",long_x0)
 print("_x1  ",long_x1)
-print("seq:  L0=%d L1=%d S0=%d S1=%d" %(total_long_0,total_long_1, single_0, single_1))
+print("seq:  L0=%d L1=%d S0=%d S1=%d,J10=%d J01=%d" %(total_long_0,total_long_1, single_0, single_1, jump_10_cnt, jump_01_cnt))
 plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
