@@ -21,8 +21,8 @@ long_one =[]
 long_one_cnt =0
 long_zero = []
 long_zero_cnt = 0
-total_long_1 = 0
-total_long_0 = 0
+
+
 cnt_idx = 0
 
 long_2_1 =0
@@ -105,11 +105,6 @@ for k in range(0,len(smp_rst),1):
         long_one_cnt = long_one_cnt +1
         long_one.append(0)
 #do zero
-        if(long_zero_cnt > 1):
-            long_zero.append(long_zero_cnt)
-            total_long_0 += 1
-        else:
-            long_zero.append(0)
         if long_zero_cnt == 2:
             long_2_0 +=1
         if long_zero_cnt == 3:
@@ -130,11 +125,17 @@ for k in range(0,len(smp_rst),1):
             long_10_0 +=1
         if long_zero_cnt == 11:
             long_11_0 +=1
-            
-        
+
+        if(long_zero_cnt > 1):
+            long_zero.append(long_zero_cnt)
+        else:
+            long_zero.append(0)
         long_zero_cnt = 0
     
-    else:         
+    else:
+        long_zero_cnt = long_zero_cnt + 1
+        long_zero.append(0)
+        
         if long_one_cnt == 2:
             long_2_1 +=1
         if long_one_cnt == 3:
@@ -158,17 +159,15 @@ for k in range(0,len(smp_rst),1):
             
         if(long_one_cnt > 1):
             long_one.append(long_one_cnt)
-            total_long_1 += 1
         else:
             long_one.append(0)
         long_one_cnt = 0    
 #do zero
-        long_zero_cnt = long_zero_cnt + 1
-        long_zero.append(0)
+       
     
 #print(long_one)       
 #print (smp_rst)
-#print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
+#print("totoal long 1 %d totoal long 0 %d" % (, ))        
 '''
 long_x0 = [long_2_0,0,0,0,0,0,0,0,0,0,0,0,0,long_3_0,0,0,0,0,0,0,0,0,0,0,0,0,long_4_0,0,0,0,0,0,0,0,0,0,0,0,0,long_5_0,0,0,0,0,0,0,0,0,0,0,0,0,
            long_6_0,0,0,0,0,0,0,0,0,0,0,0,0,long_7_0,0,0,0,0,0,0,0,0,0,0,0,0,long_8_0,0,0,0,0,0,0,0,0,0,0,0,0,long_9_0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -192,8 +191,8 @@ print("_x0",long_x0)
 plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
-#plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (total_long_0,zero))
-#plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (total_long_1,one))
+#plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (,zero))
+#plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (,one))
 
 
 #plt.plot(long_x0,color='black',marker='.',linestyle=':',label ='L0 dist')
