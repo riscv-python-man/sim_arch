@@ -6,10 +6,10 @@ from pylab import *
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 import random
 
-file_path = "./0812-4.txt"
+file_path = "./0811-4.txt"
 print("start.....")
 
-normal_run = 1
+normal_run = 0
 
 pick_lines = []
 smp_rst = []
@@ -23,11 +23,6 @@ long_zero = []
 long_zero_cnt = 0
 total_long_1 = 0
 total_long_0 = 0
-single_1 = 0
-single_0 =0
-jump_10_cnt = 0
-jump_01_cnt = 0
-
 cnt_idx = 0
 
 long_2_1 =0
@@ -59,7 +54,7 @@ ymajorLocator  = MultipleLocator(2)
 ax = plt.gca()
 plt.grid()
 plt.xlim(-4,294)
-plt.ylim(-40,20)
+plt.ylim(-50,20)
 
 ax.xaxis.set_major_locator(MultipleLocator(10))
 ax.xaxis.set_minor_locator(MultipleLocator(1) )
@@ -85,7 +80,7 @@ if normal_run == 1:
 
 #training  sequnce
 else:
-    for x in range(0,28800,1):
+    for x in range(0,288,1):
         smp_rst.append(random.randint(0,1))
         smp_rst_show.append(smp_rst[x] -30) 
             
@@ -104,16 +99,9 @@ for i in range(len(smp_rst)):
     delt.append((one-zero) - 5)
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
-last_0 = 0
-last_1 = 0
 #long one and long zero analyze
 for k in range(0,len(smp_rst),1):
     if smp_rst[k] == 1:
-        if last_0 == 0:
-            jump_01_cnt +=1
-            last_0 = 1
-
-        last_1 = 1
         long_one_cnt = long_one_cnt +1
         long_one.append(0)
 #do zero
@@ -122,7 +110,6 @@ for k in range(0,len(smp_rst),1):
             total_long_0 += 1
         else:
             long_zero.append(0)
-
         if long_zero_cnt == 2:
             long_2_0 +=1
         if long_zero_cnt == 3:
@@ -143,22 +130,11 @@ for k in range(0,len(smp_rst),1):
             long_10_0 +=1
         if long_zero_cnt == 11:
             long_11_0 +=1
-
-        if long_zero_cnt == 1:
-            single_0 +=1
+            
+        
         long_zero_cnt = 0
     
-    else:
-        if last_1 == 1:
-            jump_10_cnt += 1
-            last_1 = 0
-            
-        last_0 = 0
-        if(long_one_cnt > 1):
-            long_one.append(long_one_cnt)
-            total_long_1 += 1
-        else:
-            long_one.append(0)
+    else:         
         if long_one_cnt == 2:
             long_2_1 +=1
         if long_one_cnt == 3:
@@ -179,9 +155,12 @@ for k in range(0,len(smp_rst),1):
             long_10_1 +=1
         if long_one_cnt == 11:
             long_11_1 +=1
-
-        if long_one_cnt == 1:
-            single_1 += 1
+            
+        if(long_one_cnt > 1):
+            long_one.append(long_one_cnt)
+            total_long_1 += 1
+        else:
+            long_one.append(0)
         long_one_cnt = 0    
 #do zero
         long_zero_cnt = long_zero_cnt + 1
@@ -206,15 +185,15 @@ longx_idx = [2,3,4,5,6,7,8,9,10,11]
 long_x0 = [long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
 long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
-print("cnt  ",longx_idx)
-print("_x0  ",long_x0)
-print("_x1  ",long_x1)
-print("seq:  L0=%d L1=%d S0=%d S1=%d,J10=%d J01=%d" %(total_long_0,total_long_1, single_0, single_1, jump_10_cnt, jump_01_cnt))
+print("cnt",longx_idx)
+print("_x1",long_x1)
+print("_x0",long_x0)
+
 plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
-plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (total_long_0,zero))
-plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (total_long_1,one))
+#plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (total_long_0,zero))
+#plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (total_long_1,one))
 
 
 #plt.plot(long_x0,color='black',marker='.',linestyle=':',label ='L0 dist')
