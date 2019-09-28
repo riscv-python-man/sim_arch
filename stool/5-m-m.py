@@ -98,33 +98,47 @@ for i in range(len(smp_rst)):
         zero = zero + 1
     delt.append((one-zero) - 5)
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
-
+win_1 = 0
+win_0 = 0
+total_0 = 0
+total_1 = 0
 #long one and long zero analyze
 for k in range(0,len(smp_rst),1):
-    if smp_rst[k] == 1:
+    if smp_rst[k] == 1: #do one
         long_one_cnt = long_one_cnt +1
         long_one.append(0)
-#do zero
+        total_1 += 1
+
         if long_zero_cnt == 2:
             long_2_0 +=1
+            win_0 +=3
         if long_zero_cnt == 3:
             long_3_0 +=1
+            win_0 +=7
         if long_zero_cnt == 4:
             long_4_0 +=1
+            win_0 +=15
         if long_zero_cnt == 5:
             long_5_0 +=1
+            win_0 +=31
         if long_zero_cnt == 6:
             long_6_0 +=1
+            win_0 +=63
         if long_zero_cnt == 7:
             long_7_0 +=1
+            win_0 +=127
         if long_zero_cnt == 8:
             long_8_0 +=1
+            win_0 +=255
         if long_zero_cnt == 9:
             long_9_0 +=1
+            win_0 += 511
         if long_zero_cnt == 10:
             long_10_0 +=1
+            win_0 += 1023
         if long_zero_cnt == 11:
             long_11_0 +=1
+            win_0 += 2047
 
         if(long_zero_cnt > 1):
             long_zero.append(long_zero_cnt)
@@ -132,37 +146,46 @@ for k in range(0,len(smp_rst),1):
             long_zero.append(0)
         long_zero_cnt = 0
     
-    else:
+    else:#do zero
         long_zero_cnt = long_zero_cnt + 1
         long_zero.append(0)
-        
+        total_0 += 1
         if long_one_cnt == 2:
             long_2_1 +=1
+            win_1 += 3
         if long_one_cnt == 3:
             long_3_1 +=1
+            win_1 += 7
         if long_one_cnt == 4:
             long_4_1 +=1
+            win_1 += 15
         if long_one_cnt == 5:
             long_5_1 +=1
+            win_1 +=31
         if long_one_cnt == 6:
             long_6_1 +=1
+            win_1 += 63
         if long_one_cnt == 7:
             long_7_1 +=1
+            win_1 += 127
         if long_one_cnt == 8:
             long_8_1 +=1
+            win_1 += 255
         if long_one_cnt == 9:
             long_9_1 +=1
+            win_1 += 511
         if long_one_cnt == 10:
             long_10_1 +=1
+            win_1 += 1023
         if long_one_cnt == 11:
             long_11_1 +=1
-            
+            win_1 += 2047
         if(long_one_cnt > 1):
             long_one.append(long_one_cnt)
         else:
             long_one.append(0)
         long_one_cnt = 0    
-#do zero
+
        
     
 #print(long_one)       
@@ -184,10 +207,17 @@ longx_idx = [2,3,4,5,6,7,8,9,10,11]
 long_x0 = [long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
 long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
+if normal_run == 1:
+    print("---win in file",file_path)
+else:
+    print("---win in self test\n")
+    
 print("cnt",longx_idx)
 print("_x1",long_x1)
 print("_x0",long_x0)
 
+print("win_1",win_1 - total_0)
+print("win_0",win_0 - total_1)
 plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
 plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
