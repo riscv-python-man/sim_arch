@@ -9,8 +9,8 @@ import random
 file_path = "./0811-4.txt"
 print("start.....")
 
-normal_run = 1
-window_size = 6
+normal_run = 0
+window_size = 5
 
 pick_lines = []
 smp_rst = []
@@ -85,6 +85,9 @@ else:
         smp_rst.append(random.randint(0,1))
         smp_rst_show.append(smp_rst[x] -30) 
             
+
+for i in range(0,window_size + 1,1):
+    smp_rst.append(0)
 
 #expand for better show
 for j in range(len(smp_rst_show)):
@@ -254,7 +257,7 @@ print("cnt",longx_idx)
 print("_x1",long_x1)
 print("_x0",long_x0)
 
-print("window_size,win_max_1, win_max_0\n",(window_size,max(win_1_list),max(win_0_list)))
+print("window_size,max_1, max_0, min_1, min_0\n",(window_size,max(win_1_list),max(win_0_list),min(win_1_list),min(win_0_list)))
 
 #print("win_1",win_1 - total_0)
 #print("win_0",win_0 - total_1)
