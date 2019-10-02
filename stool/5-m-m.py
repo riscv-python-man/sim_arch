@@ -6,10 +6,10 @@ from pylab import *
 from matplotlib.ticker import MultipleLocator, FormatStrFormatter
 import random
 
-file_path = "./0811-4.txt"
+file_path = "./1002-4.txt"
 print("start.....")
 
-normal_run = 0
+normal_run = 1
 window_size = 5
 
 pick_lines = []
@@ -142,12 +142,16 @@ for k in range(0,len(smp_rst) - window_size,1):
     lost_1 = 0
     win_0 = 0
     win_1 = 0
-    for x in range(k, window_size + k+1,1):
+
+    
+    for x in range(k, window_size + k +1  ,1):
         if smp_rst[x] == 1: #do one
             long_one_cnt +=1
             long_one.append(0)
             lost_0 += 1
-            
+
+            if(long_zero_cnt == 1):
+                win_0 +=2
             if long_zero_cnt == 2:
                 long_2_0 +=1
                 win_0 +=4
@@ -178,7 +182,7 @@ for k in range(0,len(smp_rst) - window_size,1):
             if long_zero_cnt == 11:
                 long_11_0 +=1
                 win_0 += 2048
-
+            
             if(long_zero_cnt > 1):
                 long_zero.append(long_zero_cnt)
             else:
@@ -189,6 +193,9 @@ for k in range(0,len(smp_rst) - window_size,1):
             long_zero_cnt += 1
             long_zero.append(0)
             lost_1 +=1
+
+            if long_one_cnt == 1:
+                win_1 += 2                 
             if long_one_cnt == 2:
                 long_2_1 +=1
                 win_1 += 4
@@ -200,7 +207,7 @@ for k in range(0,len(smp_rst) - window_size,1):
                 win_1 += 16
             if long_one_cnt == 5:
                 long_5_1 +=1
-                win_1 +=31
+                win_1 +=32
             if long_one_cnt == 6:
                 long_6_1 +=1
                 win_1 += 64
@@ -219,14 +226,16 @@ for k in range(0,len(smp_rst) - window_size,1):
             if long_one_cnt == 11:
                 long_11_1 +=1
                 win_1 += 2048
+
             if(long_one_cnt > 1):
                 long_one.append(long_one_cnt)
             else:
                 long_one.append(0)
             long_one_cnt = 0
             
-    win_1_list.append(win_1-lost_1) 
-    win_0_list.append(win_0-lost_0)
+            
+    win_1_list.append(win_1-lost_1-1) 
+    win_0_list.append(win_0-lost_0-1)
    
     
 #print(long_one)       
