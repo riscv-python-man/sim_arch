@@ -9,7 +9,7 @@ import random
 file_path = "./0812-4.txt"
 print("start.....")
 
-normal_run = 0
+normal_run = 1
 
 pick_lines = []
 smp_rst = []
@@ -49,10 +49,12 @@ ax.yaxis.set_minor_locator(MultipleLocator(1) )
 log = open(file_path,"r")
 line_list = log.readlines()
 
-#get all lines
-for idx in range(len(line_list)):
-    line = line_list[idx]
-    pick_lines.append(line)
+#get all lines: strip a line to avoid space line
+for i, v in enumerate(line_list):
+    if not len(line_list[i].strip()): 
+        continue
+    pick_lines.append(line_list[i])
+
 
 if normal_run == 1:
 #get sample
@@ -73,15 +75,15 @@ else:
 #expand for better show
 for j in range(len(smp_rst_show)):
     if smp_rst_show[j] == 0:
-        smp_rst_show[j] = smp_rst_show[j] - 5
+        smp_rst_show[j] -= 5
 
 #1-0 delt analyze
 for i in range(len(smp_rst)):
     if(smp_rst[i] == 1):
-        one = one +1
+        one += 1
     if(smp_rst[i] == 0):
-        zero = zero + 1
-    delt.append((one-zero))
+        zero += 1
+    delt.append(one - zero)
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
 last_0 = 0
@@ -130,7 +132,7 @@ for k in range(0,len(smp_rst),1):
             single_1 += 1
         long_one_cnt = 0    
 #do zero
-        long_zero_cnt = long_zero_cnt + 1
+        long_zero_cnt +=1
         long_zero.append(0)
     
 #print(long_one)       
