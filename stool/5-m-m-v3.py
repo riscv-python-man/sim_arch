@@ -9,7 +9,7 @@ import random
 file_path = "./0812-4.txt"
 print("start.....")
 
-normal_run = 1
+normal_run = 0
 
 pick_lines = []
 smp_rst = []
@@ -28,33 +28,11 @@ single_0 =0
 jump_10_cnt = 0
 jump_01_cnt = 0
 
-cnt_idx = 0
-
-long_1_1 =0
-long_2_1 =0
-long_3_1 =0
-long_4_1 =0
-long_5_1 =0
-long_6_1 =0
-long_7_1 =0
-long_8_1 =0
-long_9_1 =0
-long_10_1 =0
-long_11_1 =0
-
-
-long_1_0 =0
-long_2_0 =0
-long_3_0 =0
-long_4_0 =0
-long_5_0 =0
-long_6_0 =0
-long_7_0 =0
-long_8_0 =0
-long_9_0 =0
-long_10_0 =0
-long_11_0 =0
-
+long_ref_array = [i+1 for i in range(11)]
+long_zero_array = [0  for i in range(11)]
+long_one_array = [0 for i in range(11)]
+#print (long_zero_array)
+#print (long_one_array)
 
 plt.figure(num=1,figsize=(12, 4))
 ymajorLocator  = MultipleLocator(2)
@@ -110,7 +88,7 @@ last_0 = 0
 last_1 = 0
 #long one and long zero analyze
 for k in range(0,len(smp_rst),1):
-    if smp_rst[k] == 1:
+    if smp_rst[k] == 1: # when seq ==1 
         if last_0 == 0:
             jump_01_cnt +=1
             last_0 = 1
@@ -118,41 +96,21 @@ for k in range(0,len(smp_rst),1):
         last_1 = 1
         long_one_cnt += 1
         long_one.append(0)
-#do zero
+
         if(long_zero_cnt >= 1):
             long_zero.append(long_zero_cnt)
             total_long_0 += 1
         else:
             long_zero.append(0)
 
-        if long_zero_cnt == 1:
-            long_1_0 +=1
-        if long_zero_cnt == 2:
-            long_2_0 +=1
-        if long_zero_cnt == 3:
-            long_3_0 +=1
-        if long_zero_cnt == 4:
-            long_4_0 +=1
-        if long_zero_cnt == 5:
-            long_5_0 +=1
-        if long_zero_cnt == 6:
-            long_6_0 +=1
-        if long_zero_cnt == 7:
-            long_7_0 +=1
-        if long_zero_cnt == 8:
-            long_8_0 +=1
-        if long_zero_cnt == 9:
-            long_9_0 +=1
-        if long_zero_cnt == 10:
-            long_10_0 +=1
-        if long_zero_cnt == 11:
-            long_11_0 +=1
+        for m,v in enumerate(long_ref_array):
+            if long_zero_cnt == long_ref_array[m]:
+                long_zero_array[m] +=1
 
         if long_zero_cnt == 1:
             single_0 +=1
         long_zero_cnt = 0
-    
-    else:
+    else:             #when seq == 0
         if last_1 == 1:
             jump_10_cnt += 1
             last_1 = 0
@@ -164,29 +122,9 @@ for k in range(0,len(smp_rst),1):
         else:
             long_one.append(0)
 
-        if long_one_cnt == 1:
-            long_1_1 +=1
-            
-        if long_one_cnt == 2:
-            long_2_1 +=1
-        if long_one_cnt == 3:
-            long_3_1 +=1
-        if long_one_cnt == 4:
-            long_4_1 +=1
-        if long_one_cnt == 5:
-            long_5_1 +=1
-        if long_one_cnt == 6:
-            long_6_1 +=1
-        if long_one_cnt == 7:
-            long_7_1 +=1
-        if long_one_cnt == 8:
-            long_8_1 +=1
-        if long_one_cnt == 9:
-            long_9_1 +=1
-        if long_one_cnt == 10:
-            long_10_1 +=1
-        if long_one_cnt == 11:
-            long_11_1 +=1
+        for n,u in enumerate(long_ref_array):
+            if long_one_cnt == long_ref_array[n]:
+                long_one_array[n] +=1
 
         if long_one_cnt == 1:
             single_1 += 1
@@ -199,13 +137,12 @@ for k in range(0,len(smp_rst),1):
 #print (smp_rst)
 #print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
 
-longx_idx = [1,2,3,4,5,6,7,8,9,10,11]
-long_x0 = [long_1_0,long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
-long_x1 = [long_1_1,long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
-for i, val in enumerate(longx_idx):
-    print("%2d: zero %2d one %2d "%(longx_idx[i],long_x0[i],long_x1[i]))
+
+for i, val in enumerate(long_ref_array):
+    print("%2d: zero %2d one %2d "%(long_ref_array[i],long_zero_array[i],long_one_array[i]))
 print("seq:  L0=%d L1=%d S0=%d S1=%d,J10=%d J01=%d" %(total_long_0,total_long_1, single_0, single_1, jump_10_cnt, jump_01_cnt))
+
 
 for i,v in enumerate(long_zero):
     long_zero[i] += 10
@@ -222,12 +159,14 @@ for i,v in enumerate(smp_rst_show):
     
 plt.plot(smp_rst_show,color='green',marker='.',label ='origin')
 plt.plot(delt,color='red',marker='.',label ='delt : 0 -1  = %d'%(zero - one))
-plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d\n[2]=%d [3]=%d [4]=%d [5]=%d [6]=%d [7]=%d [8]=%d [9]=%d [10]=%d [11]=%d'\
-         % (total_long_0-long_x0[0],zero,long_x0[1],long_x0[2],long_x0[3],long_x0[4],long_x0[5],long_x0[6],long_x0[7],long_x0[8],long_x0[9],long_x0[10]))
 
+plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d\n[2]=%d [3]=%d [4]=%d [5]=%d [6]=%d [7]=%d [8]=%d [9]=%d [10]=%d [11]=%d'\
+         % (total_long_0-long_zero_array[0],zero,long_zero_array[1],long_zero_array[2],long_zero_array[3],long_zero_array[4],long_zero_array[5],\
+            long_zero_array[6],long_zero_array[7],long_zero_array[8],long_zero_array[9],long_zero_array[10]))
 
 plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d\n[2]=%d [3]=%d [4]=%d [5]=%d [6]=%d [7]=%d [8]=%d [9]=%d [10]=%d [11]=%d'\
-         %(total_long_1 - long_x1[0],one, long_x1[1],long_x1[2],long_x1[3],long_x1[4],long_x1[5],long_x1[6],long_x1[7],long_x1[8],long_x1[9],long_x1[10]))
+         %(total_long_1 - long_one_array[0],one, long_one_array[1],long_one_array[2],long_one_array[3],long_one_array[4],long_one_array[5],long_one_array[6],\
+           long_one_array[7],long_one_array[8],long_one_array[9],long_one_array[10]))
 
 
 plt.legend(loc='best', fontsize=8)
