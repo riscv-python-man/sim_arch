@@ -30,9 +30,10 @@ jump_01_cnt = 0
 
 cnt_idx = 0
 
+long_1_1 =0
 long_2_1 =0
 long_3_1 =0
-long_4_1=0
+long_4_1 =0
 long_5_1 =0
 long_6_1 =0
 long_7_1 =0
@@ -42,6 +43,7 @@ long_10_1 =0
 long_11_1 =0
 
 
+long_1_0 =0
 long_2_0 =0
 long_3_0 =0
 long_4_0 =0
@@ -81,19 +83,19 @@ if normal_run == 1:
         for k in range(len(x)):
             if x[k].isdigit():
                 smp_rst.append(int(x[k]))
-                smp_rst_show.append(int(x[k]) - 30)
+                smp_rst_show.append(int(x[k]))
 
 #training  sequnce
 else:
     for x in range(0,28800,1):
         smp_rst.append(random.randint(0,1))
-        smp_rst_show.append(smp_rst[x] -30) 
+        smp_rst_show.append(smp_rst[x]) 
             
 
 #expand for better show
 for j in range(len(smp_rst_show)):
-    if smp_rst_show[j] == -30:
-        smp_rst_show[j] = smp_rst_show[j] - 4
+    if smp_rst_show[j] == 0:
+        smp_rst_show[j] = smp_rst_show[j] - 5
 
 #1-0 delt analyze
 for i in range(len(smp_rst)):
@@ -101,7 +103,7 @@ for i in range(len(smp_rst)):
         one = one +1
     if(smp_rst[i] == 0):
         zero = zero + 1
-    delt.append((one-zero) - 5)
+    delt.append((one-zero))
     #print("[1]=%d [0]=%d 0-1=%d" %(one,zero,one-zero))
 
 last_0 = 0
@@ -114,15 +116,17 @@ for k in range(0,len(smp_rst),1):
             last_0 = 1
 
         last_1 = 1
-        long_one_cnt = long_one_cnt +1
+        long_one_cnt += 1
         long_one.append(0)
 #do zero
-        if(long_zero_cnt > 1):
+        if(long_zero_cnt >= 1):
             long_zero.append(long_zero_cnt)
             total_long_0 += 1
         else:
             long_zero.append(0)
 
+        if long_zero_cnt == 1:
+            long_1_0 +=1
         if long_zero_cnt == 2:
             long_2_0 +=1
         if long_zero_cnt == 3:
@@ -154,11 +158,15 @@ for k in range(0,len(smp_rst),1):
             last_1 = 0
             
         last_0 = 0
-        if(long_one_cnt > 1):
+        if(long_one_cnt >= 1):
             long_one.append(long_one_cnt)
             total_long_1 += 1
         else:
             long_one.append(0)
+
+        if long_one_cnt == 1:
+            long_1_1 +=1
+            
         if long_one_cnt == 2:
             long_2_1 +=1
         if long_one_cnt == 3:
@@ -190,35 +198,37 @@ for k in range(0,len(smp_rst),1):
 #print(long_one)       
 #print (smp_rst)
 #print("totoal long 1 %d totoal long 0 %d" % (total_long_1, total_long_0))        
-'''
-long_x0 = [long_2_0,0,0,0,0,0,0,0,0,0,0,0,0,long_3_0,0,0,0,0,0,0,0,0,0,0,0,0,long_4_0,0,0,0,0,0,0,0,0,0,0,0,0,long_5_0,0,0,0,0,0,0,0,0,0,0,0,0,
-           long_6_0,0,0,0,0,0,0,0,0,0,0,0,0,long_7_0,0,0,0,0,0,0,0,0,0,0,0,0,long_8_0,0,0,0,0,0,0,0,0,0,0,0,0,long_9_0,0,0,0,0,0,0,0,0,0,0,0,0,
-           long_10_0,0,0,0,0,0,0,0,0,0,0,0,0,long_11_0,0,0,0,0,0,0,0,0,0,0,0,0]
-long_x1 = [long_2_1,0,0,0,0,0,0,0,0,0,0,0,0,long_3_1,0,0,0,0,0,0,0,0,0,0,0,0,long_4_1,0,0,0,0,0,0,0,0,0,0,0,0,long_5_1,0,0,0,0,0,0,0,0,0,0,0,0,
-           long_6_1,0,0,0,0,0,0,0,0,0,0,0,0,long_7_1,0,0,0,0,0,0,0,0,0,0,0,0,long_8_1,0,0,0,0,0,0,0,0,0,0,0,0,long_9_1,0,0,0,0,0,0,0,0,0,0,0,0,
-           long_10_1,0,0,0,0,0,0,0,0,0,0,0,0,long_11_1,0,0,0,0,0,0,0,0,0,0,0,0]
 
-for i in range(len(long_x0)):
-    long_x0[i] -= 40
-    long_x1[i] -= 20           
-'''
-longx_idx = [2,3,4,5,6,7,8,9,10,11]
-long_x0 = [long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
-long_x1 = [long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
+longx_idx = [1,2,3,4,5,6,7,8,9,10,11]
+long_x0 = [long_1_0,long_2_0,long_3_0,long_4_0,long_5_0,long_6_0,long_7_0,long_8_0,long_9_0,long_10_0,long_11_0]
+long_x1 = [long_1_1,long_2_1,long_3_1,long_4_1,long_5_1,long_6_1,long_7_1,long_8_1,long_9_1,long_10_1,long_11_1]
 
-print("cnt  ",longx_idx)
-print("_x0  ",long_x0)
-print("_x1  ",long_x1)
+for i, val in enumerate(longx_idx):
+    print("%2d: zero %2d one %2d "%(longx_idx[i],long_x0[i],long_x1[i]))
 print("seq:  L0=%d L1=%d S0=%d S1=%d,J10=%d J01=%d" %(total_long_0,total_long_1, single_0, single_1, jump_10_cnt, jump_01_cnt))
-plt.plot(smp_rst_show,color='green',marker='.',label ='smp')
-plt.plot(delt,color='red',marker='.',label ='delt(1-0):%d'%(one-zero))
 
-plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d' % (total_long_0,zero))
-plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d' % (total_long_1,one))
+for i,v in enumerate(long_zero):
+    long_zero[i] += 10
+
+for i,v in enumerate(long_one):
+    long_one[i] += 5
+
+for i,v in enumerate(delt):
+    delt[i] -= 5
+
+for i,v in enumerate(smp_rst_show):
+    smp_rst_show[i] -= 20
+
+    
+plt.plot(smp_rst_show,color='green',marker='.',label ='origin')
+plt.plot(delt,color='red',marker='.',label ='delt : 0 -1  = %d'%(zero - one))
+plt.plot(long_zero,color='brown',marker='.',label ='L0=%d [0]=%d\n[2]=%d [3]=%d [4]=%d [5]=%d [6]=%d [7]=%d [8]=%d [9]=%d [10]=%d [11]=%d'\
+         % (total_long_0-long_x0[0],zero,long_x0[1],long_x0[2],long_x0[3],long_x0[4],long_x0[5],long_x0[6],long_x0[7],long_x0[8],long_x0[9],long_x0[10]))
 
 
-#plt.plot(long_x0,color='black',marker='.',linestyle=':',label ='L0 dist')
-#plt.plot(long_x1,color='cyan',marker='.',label ='L1 dist')
+plt.plot(long_one,color='darkblue',marker='.',linestyle=':',label ='L1=%d [1]=%d\n[2]=%d [3]=%d [4]=%d [5]=%d [6]=%d [7]=%d [8]=%d [9]=%d [10]=%d [11]=%d'\
+         %(total_long_1 - long_x1[0],one, long_x1[1],long_x1[2],long_x1[3],long_x1[4],long_x1[5],long_x1[6],long_x1[7],long_x1[8],long_x1[9],long_x1[10]))
+
 
 plt.legend(loc='best', fontsize=8)
 plt.show()
